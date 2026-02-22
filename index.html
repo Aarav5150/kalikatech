@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fleet Intelligence</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:black;
+    color:white;
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+}
+
+/* TRON GRID (Always Visible) */
+.grid{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:60px 60px;
+    z-index:0;
+}
+
+/* HAZE */
+.haze{
+    position:fixed;
+    width:500px;
+    height:500px;
+    pointer-events:none;
+    background:radial-gradient(circle,
+        rgba(0,170,255,0.35) 0%,
+        rgba(0,170,255,0.15) 35%,
+        rgba(0,0,0,0) 70%);
+    border-radius:50%;
+    transform:translate(-50%, -50%);
+    z-index:0;
+    transition:background 0.4s ease;
+}
+
+/* Keep content above */
+.content{
+    position:relative;
+    z-index:2;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    padding:25px;
+    border-bottom:1px solid #00aaff;
+    transition:0.4s;
+}
+
+.navbar button{
+    background:none;
+    border:1px solid #00aaff;
+    color:#00aaff;
+    padding:10px 25px;
+    border-radius:30px;
+    cursor:pointer;
+    transition:0.4s;
+    font-family:'Orbitron',sans-serif;
+}
+
+.navbar button:hover,
+.navbar button.active{
+    background:#00aaff;
+    color:black;
+    box-shadow:0 0 20px #00aaff;
+}
+
+/* SECTIONS */
+.section{
+    display:none;
+    padding:80px 15%;
+    text-align:center;
+    animation:fadeIn 0.6s ease;
+}
+
+.section.active{
+    display:block;
+}
+
+.section h1{
+    font-family:'Orbitron';
+    margin-bottom:30px;
+    text-shadow:0 0 10px #00aaff;
+}
+
+/* Product Image */
+.product-img{
+    max-width:500px;
+    width:100%;
+    border:2px solid #00aaff;
+    border-radius:10px;
+    box-shadow:0 0 25px #00aaff;
+    margin-bottom:20px;
+    transition:0.4s;
+}
+
+/* Members */
+.members{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+    margin-top:30px;
+}
+
+.member-card{
+    border:1px solid #00aaff;
+    padding:20px;
+    width:220px;
+    border-radius:10px;
+    transition:0.4s;
+}
+
+.member-card:hover{
+    box-shadow:0 0 20px #00aaff;
+    transform:translateY(-5px);
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.footer{
+    text-align:center;
+    padding:30px;
+    font-size:0.9rem;
+    opacity:0.5;
+    border-top:1px solid #00aaff;
+    transition:0.4s;
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid"></div>
+<div class="haze"></div>
+
+<div class="content">
+
+<div class="navbar">
+    <button class="active" onclick="showTab('product', this, 'blue')">PRODUCT</button>
+    <button onclick="showTab('company', this, 'red')">COMPANY</button>
+    <button onclick="showTab('members', this, 'orange')">MEMBERS</button>
+</div>
+
+<div id="product" class="section active">
+    <h1>Our Product</h1>
+    <img src="image.png" class="product-img">
+    <p>
+        AI-powered IoT vehicle telematics system delivering real-time diagnostics,
+        predictive maintenance alerts, fuel analytics, and fleet intelligence.
+    </p>
+</div>
+
+<div id="company" class="section">
+    <h1>About The Company</h1>
+    <p>
+        We are building next-generation intelligent Hardware and Software Systems with focus on mass deployment and cutting edge innovation.
+    </p>
+</div>
+
+<div id="members" class="section">
+    <h1>Core Team</h1>
+    <div class="members">
+        <div class="member-card">
+            <h3>Aarav Rao</h3>
+            <p>Founder & CEO</p>
+        </div>
+        <div class="member-card">
+            <h3>Amritansh Singh</h3>
+            <p>Founder & CDO</p>
+        </div>
+        <div class="member-card">
+            <h3>Aadtiya Bhure</h3>
+            <p>Co-Founder & CTO</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 Kalika Tech Systems Pvt. Ltd | AI For Tech</div>
+
+</div>
+
+<script>
+const haze = document.querySelector('.haze');
+
+document.addEventListener('mousemove', (e) => {
+    haze.style.left = e.clientX + 'px';
+    haze.style.top = e.clientY + 'px';
+});
+
+function showTab(id, element, theme){
+
+    document.querySelectorAll('.section').forEach(sec=>{
+        sec.classList.remove('active');
+    });
+
+    document.querySelectorAll('.navbar button').forEach(btn=>{
+        btn.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+    element.classList.add('active');
+
+    let color;
+
+    if(theme === "blue") color = "rgba(0,170,255,";
+    if(theme === "red") color = "rgba(255,0,60,";
+    if(theme === "orange") color = "rgba(255,140,0,";
+
+    // Update haze
+    haze.style.background = `
+        radial-gradient(circle,
+        ${color}0.35) 0%,
+        ${color}0.15) 35%,
+        rgba(0,0,0,0) 70%)
+    `;
+
+    // Update UI accents
+    document.querySelectorAll('.navbar, .footer, .product-img, .member-card').forEach(el=>{
+        el.style.borderColor = color + "1)";
+    });
+
+    document.querySelectorAll('.navbar button').forEach(btn=>{
+        btn.style.borderColor = color + "1)";
+        btn.style.color = color + "1)";
+    });
+
+    document.querySelectorAll('.section h1').forEach(h=>{
+        h.style.textShadow = `0 0 10px ${color}1)`;
+    });
+
+}
+</script>
+
+</body>
+</html>
